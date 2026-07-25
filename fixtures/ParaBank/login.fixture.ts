@@ -1,0 +1,18 @@
+import { test as base } from '@playwright/test';
+import { LoginPage } from '../../pages/ParaBank/LoginPage'
+import { AccountServicesPage } from '../../pages/ParaBank/AccountServicesPage';
+
+type ParaBankFixtures = {
+    accountServicesPage : AccountServicesPage
+};
+
+export const test = base.extend<ParaBankFixtures>({
+    accountServicesPage: async ({page} ,use) => {
+        const loginpage = new LoginPage(page);
+         await loginpage.open();
+         await loginpage.login('123456' , '123456');
+
+         const accountServicesPage = new AccountServicesPage(page);
+         await use(accountServicesPage);
+    }
+});
