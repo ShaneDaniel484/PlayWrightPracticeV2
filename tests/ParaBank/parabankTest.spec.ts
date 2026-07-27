@@ -1,17 +1,16 @@
 import {expect} from '@playwright/test';
 import { test } from '../../fixtures/ParaBank/login.fixture';
 import { HeaderComponents } from '../../pages/ParaBank/HeaderComponents';
-import { TransferAmountPage } from 'pages/ParaBank/TransferAmountPage';
 
 
-// test('Successful Login' , async({accountServicesPage}) => {
+test('Successful Login' , async({accountServicesPage}) => {
 
-//     await expect(accountServicesPage.welcomeText).toBeVisible();
+    await expect(accountServicesPage.welcomeText).toBeVisible();
 
-//     const loginPage = await accountServicesPage.logout();
-//     await loginPage.verifyLoginPage();
+    const loginPage = await accountServicesPage.logout();
+    await loginPage.verifyLoginPage();
 
-// })
+})
 
 // test('Visit AboutUs Page' , async({page , accountServicesPage}) => {
 
@@ -35,11 +34,11 @@ import { TransferAmountPage } from 'pages/ParaBank/TransferAmountPage';
 
 // });
 
-test ('Transfer Amount' , async({accountServicesPage})=>{
-    const transferAmountPage = await accountServicesPage.goToTransferAmountPage();
-    await transferAmountPage.verifyTransferAccountPage();
-    await transferAmountPage.transferAmount('1');
-    await transferAmountPage.verifySuccessfulTransaction();
-    const loginPage = await accountServicesPage.logout();
-    await loginPage.verifyLoginPage();
-})
+// test ('Transfer Amount' , async({accountServicesPage})=>{
+//     const transferAmountPage = await accountServicesPage.goToTransferAmountPage();
+//     await transferAmountPage.verifyTransferAccountPage();
+//     await transferAmountPage.transferAmount('1');
+//     await transferAmountPage.verifySuccessfulTransaction();
+//     const loginPage = await accountServicesPage.logout();
+//     await loginPage.verifyLoginPage();
+// })

@@ -1,6 +1,7 @@
 import { Page , Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { SecureAreaPage } from 'pages/Heroku/SecureAreaPage';
+import { Config } from '../../Config/FrameworkConfig';
 
 export class LoginPage extends BasePage{
    readonly username : Locator;
@@ -17,7 +18,7 @@ export class LoginPage extends BasePage{
    }
 
    async open(){
-    await this.page.goto('https://parabank.parasoft.com/parabank/index.htm');
+    await this.page.goto(Config.baseURL);
    }
 
    async login(username : string , password : string):Promise<SecureAreaPage>{
