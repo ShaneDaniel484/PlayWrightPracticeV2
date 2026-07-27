@@ -11,16 +11,23 @@ const environments: Record<string, IEnvironment> = {
     prod
 };
 
-const currentEnvironment = process.env.ENV?.toLocaleLowerCase() || "dev";
 
-if(!(currentEnvironment in environments)) {
-    throw new Error(`Invalid Environment: ${currentEnvironment} 
-        valid environmets : 
-        -dev
-        -qa
-        -prod
-        -uat
-        `);
+
+const env = process.env.ENV;
+
+const currentEnvironment =
+    env === undefined ? "dev" : env.toLowerCase();
+
+if (currentEnvironment.trim() === "") {
+    throw new Error(
+        "ENV cannot be empty.\n\nValid values: dev, qa, uat, prod"
+    );
+}
+
+if (!(currentEnvironment in environments)) {
+    throw new Error(
+        `Invalid environment: ${currentEnvironment}\n\nValid values: dev, qa, uat, prod`
+    );
 }
 
 

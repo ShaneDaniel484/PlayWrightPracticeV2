@@ -18,12 +18,12 @@ export class LoginPage extends BasePage{
    }
 
    async open(){
-    await this.page.goto(Config.baseURL);
+    await this.page.goto(Config.baseURL , {timeout : Config.timeout});
    }
 
-   async login(username : string , password : string):Promise<SecureAreaPage>{
-    await this.username.fill(username);
-    await this.password.fill(password);
+   async login():Promise<SecureAreaPage>{
+    await this.username.pressSequentially(Config.username);
+    await this.password.pressSequentially(Config.password);
     await this.loginButton.click();
 
     return new SecureAreaPage(this.page);
