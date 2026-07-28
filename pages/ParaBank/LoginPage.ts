@@ -2,6 +2,7 @@ import { Page , Locator, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 import { SecureAreaPage } from 'pages/Heroku/SecureAreaPage';
 import { Config } from '../../Config/FrameworkConfig';
+import { WaitUtils } from '../../utils/WaitUtils';
 
 export class LoginPage extends BasePage{
    readonly username : Locator;
@@ -25,7 +26,7 @@ export class LoginPage extends BasePage{
     await this.username.pressSequentially(Config.username);
     await this.password.pressSequentially(Config.password);
     await this.loginButton.click();
-
+    await WaitUtils.waitForDom(this.page);  
     return new SecureAreaPage(this.page);
    }
 

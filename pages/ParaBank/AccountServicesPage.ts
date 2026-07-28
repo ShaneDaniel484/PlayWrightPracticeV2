@@ -3,6 +3,7 @@ import { BasePage } from './BasePage';
 import { LoginPage } from './LoginPage';
 import { OpenNewAccountPage } from '../../pages/ParaBank/OpenNewAccountPage';
 import { TransferAmountPage } from '../../pages/ParaBank/TransferAmountPage';
+import { WaitUtils } from '../../utils/WaitUtils';
 
 export class AccountServicesPage extends BasePage{
     readonly welcomeText : Locator;
@@ -21,6 +22,7 @@ export class AccountServicesPage extends BasePage{
 
     async logout():Promise<LoginPage>{
         await this.logoutButton.click();
+        await WaitUtils.waitForDom(this.page);
         return new LoginPage(this.page);
 
     };
@@ -28,11 +30,13 @@ export class AccountServicesPage extends BasePage{
 
     async goToOpenNewAccountPage():Promise<OpenNewAccountPage>{
         await this.openNewAccountLink.click();
+        await WaitUtils.waitForDom(this.page);
         return new OpenNewAccountPage(this.page);
     };
 
     async goToTransferAmountPage():Promise<TransferAmountPage>{
         await this.transferAmountLink.click();
+        await WaitUtils.waitForDom(this.page);
         return new TransferAmountPage(this.page);
     }
 }
