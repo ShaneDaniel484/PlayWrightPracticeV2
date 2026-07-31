@@ -26,7 +26,7 @@ export class LoginPage extends BasePage{
     await this.username.pressSequentially(Config.username);
     await this.password.pressSequentially(Config.password);
     await this.loginButton.click();
-    await WaitUtils.waitForDom(this.page);  
+    await WaitUtils.waitForNavigation(this.page);  
     return new SecureAreaPage(this.page);
    }
 

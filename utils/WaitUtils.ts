@@ -1,8 +1,9 @@
 import { Page, Locator } from "@playwright/test";
+import { Config } from "Config/FrameworkConfig";
 
 export class WaitUtils {
 
-    static async waitForDom(page: Page) {
+    static async waitForNavigation(page: Page) {
         await page.waitForLoadState("domcontentloaded");
     }
 
@@ -14,8 +15,8 @@ export class WaitUtils {
         await page.waitForLoadState("load");
     }
 
-    static async waitForVisible(locator: Locator) {
-        await locator.waitFor({ state: "visible" });
+    static async waitForVisible(locator: Locator , timeout = Config.timeout) {
+        await locator.waitFor({ state: "visible" , timeout : timeout});
     }
 
     static async waitForHidden(locator: Locator) {

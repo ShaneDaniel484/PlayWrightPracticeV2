@@ -15,7 +15,7 @@ export class HeaderComponents extends BasePage{
 
     async openAboutUsPage():Promise<AboutUsPage>{
         await this.aboutUsLink.click();
-        await WaitUtils.waitForDom(this.page);
+        await WaitUtils.waitForNavigation(this.page);
         return new AboutUsPage(this.page);
     }
 
