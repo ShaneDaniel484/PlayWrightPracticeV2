@@ -14,7 +14,9 @@ const dev: IEnvironment = {
 
     retries: 2,
 
-    headless: false
+    headless: false,
+
+    logLevel: "DEBUG",
 
 };
 

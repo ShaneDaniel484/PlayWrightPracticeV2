@@ -1,3 +1,5 @@
+import { LogLevel } from '../../PlayWright/types/LogLevel';
+
 export interface IEnvironment {
 
     name: string;
@@ -13,5 +15,7 @@ export interface IEnvironment {
     retries: number;
 
     headless: boolean;
+
+    logLevel: LogLevel;
 
 }

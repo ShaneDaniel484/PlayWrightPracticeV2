@@ -1,13 +1,20 @@
 import { Config } from '../../PlayWright/Config/FrameworkConfig'
-
-type LogLevel =
-    | "INFO"
-    | "SUCCESS"
-    | "WARN"
-    | "ERROR"
-    | "DEBUG";
+import chalk from "chalk";
+import { LogLevel } from '../../PlayWright/types/LogLevel';
 
 export class Logger {
+
+
+    private static getColor(level:LogLevel){
+        switch(level){
+            case "INFO": return chalk.blue;
+            case "SUCCESS": return chalk.green;
+            case "DEBUG": return chalk.magenta;
+            case "ERROR": return chalk.red;
+            case "WARN": return chalk.yellow;
+            default: return chalk.white;
+        }
+    }
 
     private static getTimestamp() :string{
         const now = new Date();
@@ -28,7 +35,9 @@ export class Logger {
     }
 
     private static log(level : LogLevel , message : string) {
-        console.log(`[${this.getTimestamp()}] [${Config.name}] [${level}] ${message}`)
+
+        const color = this.getColor(level);
+        console.log(color( `[${this.getTimestamp()}] [${Config.name}] [${level}] ${message}`));
     }
 
 
