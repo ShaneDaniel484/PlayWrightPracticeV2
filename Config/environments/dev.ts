@@ -6,9 +6,9 @@ const dev: IEnvironment = {
 
     baseURL: "https://parabank.parasoft.com/parabank/index.htm",
 
-    username: "parabank",
+    username: "123456",
 
-    password: "parabank",
+    password: "123456",
 
     timeout: 30000,
 
