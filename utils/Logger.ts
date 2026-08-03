@@ -1,63 +1,95 @@
-import { Config } from '../../PlayWright/Config/FrameworkConfig'
+import { Config } from "../../PlayWright/Config/FrameworkConfig";
 import chalk from "chalk";
-import { LogLevel } from '../../PlayWright/types/LogLevel';
+import { LogLevel } from "../../PlayWright/types/LogLevel";
+
+const LOG_CONFIG: Record<LogLevel,
+    {
+        color: typeof chalk.blue;
+        priority: number;
+    }
+> = {
+    DEBUG: {
+        color: chalk.magenta,
+        priority: 1,
+    },
+    INFO: {
+        color: chalk.blue,
+        priority: 2,
+    },
+    SUCCESS: {
+        color: chalk.green,
+        priority: 3,
+    },
+    WARN: {
+        color: chalk.yellow,
+        priority: 4,
+    },
+    ERROR: {
+        color: chalk.red,
+        priority: 5,
+    },
+};
 
 export class Logger {
 
-
-    private static getColor(level:LogLevel){
-        switch(level){
-            case "INFO": return chalk.blue;
-            case "SUCCESS": return chalk.green;
-            case "DEBUG": return chalk.magenta;
-            case "ERROR": return chalk.red;
-            case "WARN": return chalk.yellow;
-            default: return chalk.white;
-        }
+    private static getColor(level: LogLevel) {
+        return LOG_CONFIG[level].color;
     }
 
-    private static getTimestamp() :string{
+    private static getPriority(level: LogLevel): number {
+        return LOG_CONFIG[level].priority;
+    }
+
+    private static getTimestamp(): string {
         const now = new Date();
-        const day = now.getDate();
-        const month = now.getMonth() +1;
+
+        const day = now.getDate().toString().padStart(2, "0");
+        const month = (now.getMonth() + 1).toString().padStart(2, "0");
         const year = now.getFullYear();
-        const hour = now.getHours();
-        const minute = now.getMinutes();
-        const second = now.getSeconds();
 
-        const formattedDay =  day.toString().padStart(2,"0");
-        const formattedMonth = month.toString().padStart(2,"0");
-        const formattedHour = hour.toString().padStart(2,"0");
-        const formattedMinute = minute.toString().padStart(2,"0");
-        const formattedSecond = second.toString().padStart(2,"0");
+        const hour = now.getHours().toString().padStart(2, "0");
+        const minute = now.getMinutes().toString().padStart(2, "0");
+        const second = now.getSeconds().toString().padStart(2, "0");
 
-        return `${formattedDay}-${formattedMonth}-${year} ${formattedHour}:${formattedMinute}:${formattedSecond}`
+        return `${day}-${month}-${year} ${hour}:${minute}:${second}`;
     }
 
-    private static log(level : LogLevel , message : string) {
+    private static log(level: LogLevel, message: string) {
+
+        const currentPriority = this.getPriority(level);
+
+        const configuredPriority = this.getPriority(Config.logLevel);
+
+        if (currentPriority < configuredPriority) {
+            return;
+        }
 
         const color = this.getColor(level);
-        console.log(color( `[${this.getTimestamp()}] [${Config.name}] [${level}] ${message}`));
+
+        console.log(
+            color(
+                `[${this.getTimestamp()}] [${Config.name}] [${level}] ${message}`
+            )
+        );
     }
 
-
-    static info(message : string) {
-        this.log("INFO" , message)
+    static info(message: string) {
+        this.log("INFO", message);
     }
 
-    static warn(message : string) {
-        this.log("WARN" , message)
+    static success(message: string) {
+        this.log("SUCCESS", message);
     }
 
-    static error(message : string) {
-        this.log("ERROR" , message)
-    }
-    
-    static success(message : string) {
-        this.log("SUCCESS" , message)
+    static warn(message: string) {
+        this.log("WARN", message);
     }
 
-    static debug(message : string) {
-        this.log("DEBUG" , message)
+    static error(message: string) {
+        this.log("ERROR", message);
+    }
+
+    static debug(message: string) {
+        this.log("DEBUG", message);
     }
 }
